@@ -45,10 +45,14 @@ class plan
     #[ORM\OneToMany(mappedBy: 'id_plan', targetEntity: siteClient::class,orphanRemoval:true)]
     private Collection $plan;
 
+    #[ORM\OneToMany(mappedBy: 'id_plan', targetEntity: RandomCommande::class)]
+    private Collection $randomCommandes;
+
     public function __construct()
     {
         $this->yes = new ArrayCollection();
         $this->plan = new ArrayCollection();
+        $this->randomCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,36 @@ class plan
             // set the owning side to null (unless already changed)
             if ($plan->getIdPlan() === $this) {
                 $plan->setIdPlan(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RandomCommande>
+     */
+    public function getRandomCommandes(): Collection
+    {
+        return $this->randomCommandes;
+    }
+
+    public function addRandomCommande(RandomCommande $randomCommande): static
+    {
+        if (!$this->randomCommandes->contains($randomCommande)) {
+            $this->randomCommandes->add($randomCommande);
+            $randomCommande->setIdPlan($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRandomCommande(RandomCommande $randomCommande): static
+    {
+        if ($this->randomCommandes->removeElement($randomCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($randomCommande->getIdPlan() === $this) {
+                $randomCommande->setIdPlan(null);
             }
         }
 

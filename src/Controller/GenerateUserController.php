@@ -20,7 +20,7 @@ class GenerateUserController extends AbstractController
 
         // ... e.g. get the user data from a registration form
         $user = new User();
-        $plaintextPassword = $request->request->get('password');
+        $plaintextPassword = "winco2023";
         
         // hash the password (based on the security.yaml config for the $user class)
         $hashedPassword = $passwordHasher->hashPassword(
@@ -28,7 +28,7 @@ class GenerateUserController extends AbstractController
             $plaintextPassword
         );
         $user->setPassword($hashedPassword);
-        $user->setEmail('user');
+        $user->setEmail('d.akalai@gmail.com');
         $entityManager->persist($user);
         $entityManager->flush();
         
