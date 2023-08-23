@@ -30,7 +30,11 @@ class PlanController extends AbstractController
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers ,$encoders);
-        $jsonContent = $serializer->normalize($plans, 'json',[ObjectNormalizer::IGNORED_ATTRIBUTES => ['yes','plan','siteClients','ticketClients']]);
+        $jsonContent = $serializer->normalize($plans, 'json',[
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+             }
+         ]);
         return new jsonResponse($jsonContent);
     }
 

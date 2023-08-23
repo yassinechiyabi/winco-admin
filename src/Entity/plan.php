@@ -18,7 +18,7 @@ class plan
     #[ORM\Column(length: 255)]
     private ?string $nom_plan = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2000)]
     private ?string $desc_plan = null;
 
     #[ORM\Column]
